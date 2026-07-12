@@ -1,6 +1,7 @@
 #include "libft.h"
 #include <stdio.h>
 #include <string.h>
+#include <strings.h>
 
 int main(void)
 {
@@ -56,6 +57,24 @@ int main(void)
 		memset(buf3, 0, 0);      // len 0 -> 아무것도 안 바뀌어야 함
 		ft_memset(buf4, 0, 0);
 		printf("len 0 처리: %s\n", (memcmp(buf3, buf4, 5) == 0) ? "OK" : "FAIL");
+	}
+
+	printf("--- ft_bzero ---\n");
+	{
+		char	buf5[10] = "hongjimin";
+		char	buf6[10] = "hongjimin";
+
+		bzero(buf5, 10);      // 정답(표준 bzero)
+		ft_bzero(buf6, 10);   // 내 구현
+		printf("결과 일치: %s\n", (memcmp(buf5, buf6, 10) == 0) ? "OK" : "FAIL");
+	}
+	{
+		char	buf7[10] = "abcdefghi";
+		char	buf8[10] = "abcdefghi";
+
+		bzero(buf7, 4);       // 앞 4바이트만 0
+		ft_bzero(buf8, 4);
+		printf("일부만 초기화: %s\n", (memcmp(buf7, buf8, 10) == 0) ? "OK" : "FAIL");
 	}
 
 	return (0);
