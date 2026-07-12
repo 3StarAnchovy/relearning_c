@@ -1,5 +1,6 @@
 #include "libft.h"
 #include <stdio.h>
+#include <string.h>
 
 int main(void)
 {
@@ -28,6 +29,34 @@ int main(void)
 	printf("%zu\n", ft_strlen(""));           // 0 (빈 문자열)
 	printf("%zu\n", ft_strlen("a"));          // 1
 	printf("%zu\n", ft_strlen("hello world")); // 11 (공백 포함)
+
+	printf("--- ft_memset ---\n");
+	{
+		char	buf1[10];
+		char	buf2[10];
+		void	*ret;
+
+		memset(buf1, 'A', 10);          // 정답(표준 memset)
+		ret = ft_memset(buf2, 'A', 10); // 내 구현
+		printf("결과 일치: %s\n", (memcmp(buf1, buf2, 10) == 0) ? "OK" : "FAIL");
+		printf("리턴값이 원본 포인터와 동일: %s\n", (ret == buf2) ? "OK" : "FAIL");
+	}
+	{
+		int	arr1[5];
+		int	arr2[5];
+
+		memset(arr1, 0, sizeof(arr1));           // int 배열도 바이트 단위로 밀기
+		ft_memset(arr2, 0, sizeof(arr2));
+		printf("int 배열 일치: %s\n", (memcmp(arr1, arr2, sizeof(arr1)) == 0) ? "OK" : "FAIL");
+	}
+	{
+		char	buf3[5] = "abcde";
+		char	buf4[5] = "abcde";
+
+		memset(buf3, 0, 0);      // len 0 -> 아무것도 안 바뀌어야 함
+		ft_memset(buf4, 0, 0);
+		printf("len 0 처리: %s\n", (memcmp(buf3, buf4, 5) == 0) ? "OK" : "FAIL");
+	}
 
 	return (0);
 }
