@@ -23,5 +23,11 @@ int main(void)
 	printf("%d\n", ft_isprint('\n'));   // 31 이하(개행) -> 0
 	printf("%d\n", ft_isprint(127));    // 범위 밖(DEL) -> 0
 
+	printf("--- ft_strlen ---\n");
+	printf("%zu\n", ft_strlen("hello"));      // 5
+	printf("%zu\n", ft_strlen(""));           // 0 (빈 문자열)
+	printf("%zu\n", ft_strlen("a"));          // 1
+	printf("%zu\n", ft_strlen("hello world")); // 11 (공백 포함)
+
 	return (0);
 }
