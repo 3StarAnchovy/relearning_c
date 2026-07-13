@@ -77,5 +77,27 @@ int main(void)
 		printf("일부만 초기화: %s\n", (memcmp(buf7, buf8, 10) == 0) ? "OK" : "FAIL");
 	}
 
+	printf("--- ft_memcpy ---\n");
+	{
+		char	src1[10] = "hongjimin";
+		char	dst1[10];
+		char	dst2[10];
+		void	*ret;
+
+		memcpy(dst1, src1, 10);          // 정답(표준 memcpy)
+		ret = ft_memcpy(dst2, src1, 10); // 내 구현
+		printf("결과 일치: %s\n", (memcmp(dst1, dst2, 10) == 0) ? "OK" : "FAIL");
+		printf("리턴값이 dst와 동일: %s\n", (ret == dst2) ? "OK" : "FAIL");
+	}
+	{
+		char	src2[10] = "abcdefghi";
+		char	dst3[10] = "XXXXXXXXX";
+		char	dst4[10] = "XXXXXXXXX";
+
+		memcpy(dst3, src2, 4);      // 앞 4바이트만 복사, 나머지는 그대로
+		ft_memcpy(dst4, src2, 4);
+		printf("일부만 복사: %s\n", (memcmp(dst3, dst4, 10) == 0) ? "OK" : "FAIL");
+	}
+
 	return (0);
 }
