@@ -173,5 +173,49 @@ int main(void)
 		printf("len 0: %s\n", (memcmp(buf15, buf16, 10) == 0) ? "OK" : "FAIL");
 	}
 
+	printf("--- ft_strlcpy ---\n");
+	{
+		char	dst17[10];
+		char	dst18[10];
+		size_t	r1;
+		size_t	r2;
+
+		memset(dst17, 'X', sizeof(dst17));
+		memset(dst18, 'X', sizeof(dst18));
+		r1 = strlcpy(dst17, "hongjimin", sizeof(dst17));    // 정확히 맞는 케이스
+		r2 = ft_strlcpy(dst18, "hongjimin", sizeof(dst18));
+		printf("정확히 맞는 케이스: %s\n", (memcmp(dst17, dst18, 10) == 0 && r1 == r2) ? "OK" : "FAIL");
+	}
+	{
+		char	dst19[10];
+		char	dst20[10];
+		size_t	r1;
+		size_t	r2;
+
+		memset(dst19, 'X', sizeof(dst19));
+		memset(dst20, 'X', sizeof(dst20));
+		r1 = strlcpy(dst19, "hi", sizeof(dst19));           // src가 더 짧은 케이스
+		r2 = ft_strlcpy(dst20, "hi", sizeof(dst20));
+		printf("src가 짧은 케이스: %s\n", (memcmp(dst19, dst20, 10) == 0 && r1 == r2) ? "OK" : "FAIL");
+	}
+	{
+		char	dst21[5];
+		char	dst22[5];
+		size_t	r1;
+		size_t	r2;
+
+		r1 = strlcpy(dst21, "hongjimin", sizeof(dst21));    // 잘리는 케이스
+		r2 = ft_strlcpy(dst22, "hongjimin", sizeof(dst22));
+		printf("잘리는 케이스: %s\n", (memcmp(dst21, dst22, 5) == 0 && r1 == r2) ? "OK" : "FAIL");
+	}
+	{
+		char	dst23[10];
+		size_t	r2;
+
+		memset(dst23, 'X', sizeof(dst23));
+		r2 = ft_strlcpy(dst23, "hongjimin", 0);             // dstsize 0
+		printf("dstsize 0: %s\n", (r2 == 9) ? "OK" : "FAIL");
+	}
+
 	return (0);
 }
