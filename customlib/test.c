@@ -99,5 +99,79 @@ int main(void)
 		printf("일부만 복사: %s\n", (memcmp(dst3, dst4, 10) == 0) ? "OK" : "FAIL");
 	}
 
+	printf("--- ft_memccpy ---\n");
+	{
+		char	src5[10] = "hongjimin";
+		char	dst5[10] = "XXXXXXXXX";
+		char	dst6[10] = "XXXXXXXXX";
+		void	*ret1;
+		void	*ret2;
+
+		ret1 = memccpy(dst5, src5, 'j', 10);    // 정답(표준 memccpy)
+		ret2 = ft_memccpy(dst6, src5, 'j', 10); // 내 구현
+		printf("결과 일치: %s\n", (memcmp(dst5, dst6, 10) == 0) ? "OK" : "FAIL");
+		printf("리턴값 오프셋 일치: %s\n", ((char *)ret1 - dst5 == (char *)ret2 - dst6) ? "OK" : "FAIL");
+	}
+	{
+		char	src6[10] = "hongjimin";
+		char	dst7[10] = "XXXXXXXXX";
+		char	dst8[10] = "XXXXXXXXX";
+		void	*ret1;
+		void	*ret2;
+
+		ret1 = memccpy(dst7, src6, 'z', 10);    // src에 없는 문자 -> n바이트 전부 복사, NULL 리턴
+		ret2 = ft_memccpy(dst8, src6, 'z', 10);
+		printf("찾는 문자 없음 - 결과 일치: %s\n", (memcmp(dst7, dst8, 10) == 0) ? "OK" : "FAIL");
+		printf("찾는 문자 없음 - 둘 다 NULL: %s\n", (ret1 == NULL && ret2 == NULL) ? "OK" : "FAIL");
+	}
+	{
+		char	src7[10] = "hongjimin";
+		char	dst9[10] = "XXXXXXXXX";
+		char	dst10[10] = "XXXXXXXXX";
+		void	*ret1;
+		void	*ret2;
+
+		ret1 = memccpy(dst9, src7, 'h', 10);    // 첫 바이트가 바로 c인 경우
+		ret2 = ft_memccpy(dst10, src7, 'h', 10);
+		printf("첫 바이트가 c - 결과 일치: %s\n", (memcmp(dst9, dst10, 10) == 0) ? "OK" : "FAIL");
+		printf("첫 바이트가 c - 리턴값 오프셋 일치: %s\n", ((char *)ret1 - dst9 == (char *)ret2 - dst10) ? "OK" : "FAIL");
+	}
+
+	printf("--- ft_memmove ---\n");
+	{
+		char	buf9[10] = "abcdefghi";
+		char	buf10[10] = "abcdefghi";
+
+		memmove(buf9 + 2, buf9, 5);      // dst > src (뒤로 겹침)
+		ft_memmove(buf10 + 2, buf10, 5);
+		printf("dst>src 겹침: %s\n", (memcmp(buf9, buf10, 10) == 0) ? "OK" : "FAIL");
+	}
+	{
+		char	buf11[10] = "abcdefghi";
+		char	buf12[10] = "abcdefghi";
+
+		memmove(buf11, buf11 + 2, 5);    // dst < src (앞으로 겹침)
+		ft_memmove(buf12, buf12 + 2, 5);
+		printf("dst<src 겹침: %s\n", (memcmp(buf11, buf12, 10) == 0) ? "OK" : "FAIL");
+	}
+	{
+		char	buf13[10] = "abcdefghi";
+		char	buf14[10] = "abcdefghi";
+		void	*ret2;
+
+		memmove(buf13, buf13, 10);          // 안 겹침 (같은 위치)
+		ret2 = ft_memmove(buf14, buf14, 10);
+		printf("안 겹침: %s\n", (memcmp(buf13, buf14, 10) == 0) ? "OK" : "FAIL");
+		printf("리턴값이 dst와 동일: %s\n", (ret2 == buf14) ? "OK" : "FAIL");
+	}
+	{
+		char	buf15[10] = "abcdefghi";
+		char	buf16[10] = "abcdefghi";
+
+		memmove(buf15 + 2, buf15, 0);    // len 0 엣지케이스
+		ft_memmove(buf16 + 2, buf16, 0);
+		printf("len 0: %s\n", (memcmp(buf15, buf16, 10) == 0) ? "OK" : "FAIL");
+	}
+
 	return (0);
 }
