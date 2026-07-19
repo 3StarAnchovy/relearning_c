@@ -4,19 +4,22 @@
 // 메모리 주소가 인접해있으면, 복사하다가 덮어씌울수 있음
 void *ft_memmove(void *dst, const void *src, size_t len)
 {
+	size_t backIdx;
+	size_t i;
 
 	if (dst <= src)
 	{ // 걍 앞에서 복사
-		for (size_t i = 0; i < len; i++)
+		for (i = 0; i < len; i++)
 		{
 			*(unsigned char *)(dst + i) = *(unsigned char *)(src + i);
 		}
 	}
 	else
 	{
-		for (int i = len - 1; i >= 0; i--)
+		for (i = 0; i < len; i++)
 		{
-			*(unsigned char *)(dst + i) = *(unsigned char *)(src + i);
+			backIdx = len - i -1;
+			*(unsigned char *)(dst + backIdx) = *(unsigned char *)(src + backIdx);
 		}
 	}
 
